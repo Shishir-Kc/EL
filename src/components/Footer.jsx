@@ -1,3 +1,4 @@
+/* src/components/Footer.jsx — Modern grayscale editorial landing page component */
 import { motion } from 'framer-motion';
 import useInView from '../hooks/useInView';
 
