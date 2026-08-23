@@ -46,16 +46,17 @@ function Tag({ label }) {
   return (
     <span
       style={{
-        background: 'var(--bg-3)',
+        background: 'rgba(255,255,255,0.04)',
         border: '1px solid var(--border-2)',
         color: 'var(--text-3)',
-        fontSize: 11,
+        fontSize: 10,
         fontWeight: 400,
-        padding: '4px 10px',
+        padding: '5px 12px',
         borderRadius: 2,
-        letterSpacing: '0.06em',
+        letterSpacing: '0.08em',
         textTransform: 'lowercase',
         whiteSpace: 'nowrap',
+        fontFamily: '"JetBrains Mono", monospace',
       }}
     >
       {label}
@@ -65,6 +66,6 @@ function Tag({ label }) {
 
 function Divider() {
   return (
-    <span style={{ color: 'var(--border-2)', fontSize: 11 }}>|</span>
+    <span style={{ color: 'var(--border-2)', fontSize: 10, fontFamily: '"JetBrains Mono", monospace' }}>|</span>
   );
 }
