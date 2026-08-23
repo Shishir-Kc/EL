@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import useInView from '../hooks/useInView';
 
@@ -26,13 +26,6 @@ const colorMap = {
   'accent': 'var(--accent)',
   '': 'transparent',
 };
-
-const blinkKeyframes = `
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-`;
 
 export default function Terminal() {
   const [ref, isInView] = useInView();
@@ -64,7 +57,6 @@ export default function Terminal() {
 
       const currentLine = lines[li];
 
-      // Empty lines: push immediately, advance
       if (currentLine.text === '') {
         setDisplayedLines(prev => [...prev, { text: '', color: currentLine.color }]);
         setCurrentLineText('');
@@ -81,7 +73,6 @@ export default function Terminal() {
         charIndex.current += 1;
         setCurrentLineText(currentLine.text.slice(0, ci + 1));
       } else {
-        // Line complete
         setDisplayedLines(prev => [...prev, { text: currentLine.text, color: currentLine.color }]);
         setCurrentLineText('');
         charIndex.current = 0;
@@ -90,7 +81,7 @@ export default function Terminal() {
           setCurrentLineColor(lines[lineIndex.current].color);
         }
       }
-    }, 30);
+    }, 28);
 
     return () => clearInterval(intervalRef.current);
   }, [isInView]);
@@ -100,25 +91,23 @@ export default function Terminal() {
       style={{
         width: '100%',
         background: 'var(--bg-2)',
-        padding: '120px 0',
+        padding: '140px 0',
       }}
     >
-      <style>{blinkKeyframes}</style>
-
       {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: 60 }}>
+      <div style={{ textAlign: 'center', marginBottom: 72 }}>
         <p
           style={{
             fontFamily: '"DM Sans", sans-serif',
             fontWeight: 400,
             fontSize: 11,
-            letterSpacing: '0.3em',
-            color: 'var(--accent)',
+            letterSpacing: '0.35em',
+            color: 'var(--text-3)',
             textTransform: 'uppercase',
-            marginBottom: 12,
+            marginBottom: 14,
           }}
         >
-          ELYSIUM IN ACTION
+          Live Preview
         </p>
         <h2
           style={{
@@ -138,62 +127,39 @@ export default function Terminal() {
       <div
         ref={ref}
         style={{
-          maxWidth: 740,
+          maxWidth: 760,
           margin: '0 auto',
           padding: '0 40px',
         }}
-        className="max-[640px]:!px-6"
       >
         <motion.div
-          initial={{ y: 60, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : { y: 60, opacity: 0 }}
+          initial={{ y: 50, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           style={{
             border: '1px solid var(--border-2)',
-            borderRadius: 8,
+            borderRadius: 10,
             overflow: 'hidden',
-            boxShadow: '0 40px 80px rgba(0,0,0,0.5)',
+            boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
           }}
         >
           {/* Title bar */}
           <div
             style={{
-              background: '#1a1714',
+              background: '#0f0f0f',
               height: 44,
               padding: '0 16px',
               display: 'flex',
               alignItems: 'center',
               position: 'relative',
+              borderBottom: '1px solid var(--border)',
             }}
           >
-            {/* Traffic lights */}
             <div style={{ display: 'flex', gap: 8 }}>
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#ff5f56',
-                }}
-              />
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#ffbd2e',
-                }}
-              />
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: '50%',
-                  background: '#27c93f',
-                }}
-              />
+              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
+              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
+              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
             </div>
-            {/* Center title */}
             <span
               style={{
                 position: 'absolute',
@@ -201,7 +167,7 @@ export default function Terminal() {
                 transform: 'translateX(-50%)',
                 fontFamily: '"JetBrains Mono", monospace',
                 fontWeight: 400,
-                fontSize: 12,
+                fontSize: 11,
                 color: 'var(--text-3)',
                 letterSpacing: '0.05em',
               }}
@@ -213,36 +179,34 @@ export default function Terminal() {
           {/* Terminal body */}
           <div
             style={{
-              background: '#0a0908',
-              padding: '28px 32px',
+              background: '#060606',
+              padding: '28px 36px',
               minHeight: 340,
               fontFamily: '"JetBrains Mono", monospace',
               fontSize: 13,
-              lineHeight: 1.9,
+              lineHeight: 2,
               color: 'var(--text-2)',
             }}
           >
-            {/* Already-typed lines */}
             {displayedLines.map((line, i) => (
-              <div key={i} style={{ color: colorMap[line.color] || 'var(--text-2)' }}>
+              <div key={i} style={{ color: colorMap[line.color] || 'var(--text-2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                 {line.text === '' ? '\u00A0' : line.text}
               </div>
             ))}
 
-            {/* Currently typing line */}
             {!done && currentLineText !== '' && (
               <div style={{ color: colorMap[currentLineColor] || 'var(--text-2)' }}>
                 {currentLineText}
               </div>
             )}
 
-            {/* Blinking cursor after done */}
             {done && (
               <div>
                 <span
                   style={{
                     color: 'var(--accent)',
                     animation: 'blink 1.1s ease-in-out infinite',
+                    fontSize: 14,
                   }}
                 >
                   █
