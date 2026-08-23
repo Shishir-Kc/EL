@@ -3,32 +3,10 @@ import { motion } from 'framer-motion';
 import Status from './Status';
 import Toast from './Toast';
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-};
+const installCmd = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
 
 export default function Hero() {
   const [toastVisible, setToastVisible] = useState(false);
-
-  const installCmd = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
 
   const handleCopy = () => {
     navigator.clipboard.writeText(installCmd).then(() => {
@@ -40,174 +18,206 @@ export default function Hero() {
   return (
     <>
       <Toast message="Copied to clipboard" visible={toastVisible} />
-    <section
-      style={{
-        height: '100svh',
-        overflow: 'hidden',
-        background: 'var(--bg)',
-        position: 'relative',
-      }}
-    >
-      {/* Layer 2: radial glow */}
-      <div
+      <section
         style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 60%, rgba(224,108,58,0.06) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Layer 3: dot grid */}
-      <div
-        className="dot-grid"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Layer 4: edge fade */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background:
-            'radial-gradient(ellipse at center, transparent 40%, #0d0c0b 75%)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Content */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        style={{
+          height: '100svh',
+          overflow: 'hidden',
+          background: 'var(--bg)',
           position: 'relative',
-          zIndex: 10,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          minHeight: '100vh',
         }}
       >
-        {/* 1. ELYSIUM heading */}
-        <motion.div variants={itemVariants}>
-          <h1
-            style={{
-              fontFamily: '"Cormorant Garamond", serif',
-              fontWeight: 300,
-              fontSize: 'clamp(7rem, 14vw, 13rem)',
-              letterSpacing: '0.08em',
-              color: 'var(--text-1)',
-              lineHeight: 1,
-              margin: 0,
-            }}
-          >
-            ELYSIUM
-          </h1>
-        </motion.div>
-
-        {/* 4. Description */}
-        <motion.div variants={itemVariants}>
-          <p
-            style={{
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 300,
-              fontSize: '16px',
-              color: 'var(--text-2)',
-              maxWidth: '400px',
-              margin: '20px auto 0 auto',
-              lineHeight: 1.7,
-            }}
-          >
-            Personal Home AI Assistant
-          </p>
-        </motion.div>
-
-        {/* Status Tags */}
-        <motion.div variants={itemVariants}>
-          <Status />
-        </motion.div>
-
-        {/* 5. Buttons */}
-        <motion.div
-          variants={itemVariants}
+        {/* Subtle radial glow */}
+        <div
           style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse 70% 50% at 50% 55%, rgba(255,255,255,0.035) 0%, transparent 60%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Dot grid */}
+        <div
+          className="dot-grid"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Edge vignette */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background:
+              'radial-gradient(ellipse at center, transparent 30%, #030303 80%)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Content */}
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '24px',
-            marginTop: '36px',
+            justifyContent: 'center',
+            textAlign: 'center',
+            minHeight: '100vh',
+            padding: '0 24px',
           }}
         >
-          {/* Install Command */}
-          <div
-            onClick={handleCopy}
-            title="Click to copy"
+          {/* Small label */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             style={{
-              background: 'rgba(0,0,0,0.3)',
-              border: '1px solid var(--border)',
-              padding: '12px 20px',
-              borderRadius: '4px',
-              fontFamily: '"JetBrains Mono", monospace',
-              fontSize: '13px',
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 400,
+              fontSize: 11,
+              letterSpacing: '0.35em',
+              textTransform: 'uppercase',
               color: 'var(--text-3)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'pointer',
-              transition: 'border-color 0.2s ease',
+              marginBottom: 36,
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border)' }}
           >
-            <span style={{ color: 'var(--accent)' }}>$</span>
-            <span>{installCmd}</span>
-          </div>
+            Modular AI Agent & CLI Toolkit
+          </motion.p>
 
-          {/* Button B: View on GitHub */}
-          <a 
-            href="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            style={{ textDecoration: 'none' }}
+          {/* Main heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            style={{
+              fontFamily: '"Cormorant Garamond", serif',
+              fontWeight: 300,
+              fontSize: 'clamp(6.5rem, 13vw, 12rem)',
+              letterSpacing: '0.06em',
+              color: 'var(--text-1)',
+              lineHeight: 0.92,
+              margin: 0,
+            }}
           >
-            <button
+            E.L.Y.S.I.U.M
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
+            style={{
+              fontFamily: '"DM Sans", sans-serif',
+              fontWeight: 300,
+              fontSize: 'clamp(1rem, 1.4vw, 1.25rem)',
+              color: 'var(--text-2)',
+              maxWidth: 520,
+              margin: '28px auto 0 auto',
+              lineHeight: 1.65,
+              letterSpacing: '0.01em',
+            }}
+          >
+            A modular, extensible Python-based personal AI agent and CLI tool for developers who think in systems.
+          </motion.p>
+
+          {/* Status Tags */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
+            style={{ marginTop: 36 }}
+          >
+            <Status />
+          </motion.div>
+
+          {/* Actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 24,
+              marginTop: 48,
+            }}
+          >
+            {/* Install command */}
+            <div
+              onClick={handleCopy}
+              title="Click to copy"
               style={{
-                background: 'transparent',
-                border: '1px solid var(--border-2)',
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid var(--border)',
+                padding: '14px 24px',
+                borderRadius: '4px',
+                fontFamily: '"JetBrains Mono", monospace',
+                fontSize: 13,
                 color: 'var(--text-2)',
-                fontFamily: '"DM Sans", sans-serif',
-                fontWeight: 500,
-                fontSize: '14px',
-                letterSpacing: '0.06em',
-                padding: '12px 32px',
-                borderRadius: '2px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
                 cursor: 'pointer',
-                transition:
-                  'border-color 0.25s ease, color 0.25s ease, transform 0.25s ease',
+                transition: 'border-color 0.25s ease, background 0.25s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--accent)';
-                e.currentTarget.style.color = 'var(--text-1)';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)';
+                e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-2)';
-                e.currentTarget.style.color = 'var(--text-2)';
+                e.currentTarget.style.borderColor = 'var(--border)';
+                e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
               }}
             >
-              View on GitHub
-            </button>
-          </a>
-        </motion.div>
-      </motion.div>
-    </section>
+              <span style={{ color: 'var(--text-1)' }}>$</span>
+              <span>{installCmd}</span>
+            </div>
+
+            <a
+              href="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
+              <button
+                style={{
+                  background: 'transparent',
+                  border: '1px solid var(--border-2)',
+                  color: 'var(--text-2)',
+                  fontFamily: '"DM Sans", sans-serif',
+                  fontWeight: 400,
+                  fontSize: 13,
+                  letterSpacing: '0.08em',
+                  padding: '14px 36px',
+                  borderRadius: '2px',
+                  cursor: 'pointer',
+                  transition: 'border-color 0.25s ease, color 0.25s ease, background 0.25s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--text-1)';
+                  e.currentTarget.style.color = 'var(--text-1)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border-2)';
+                  e.currentTarget.style.color = 'var(--text-2)';
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                View Source
+              </button>
+            </a>
+          </motion.div>
+        </div>
+      </section>
     </>
   );
 }
