@@ -1,3 +1,4 @@
+/* src/components/Status.jsx — Modern grayscale editorial landing page component */
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
