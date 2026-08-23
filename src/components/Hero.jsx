@@ -1,3 +1,4 @@
+/* src/components/Hero.jsx — Modern grayscale editorial landing page component */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Status from './Status';
