@@ -1,3 +1,4 @@
+/* src/components/Terminal.jsx — Modern grayscale editorial landing page component */
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import useInView from '../hooks/useInView';
