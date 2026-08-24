@@ -1,18 +1,20 @@
-/* src/App.jsx — Modern grayscale editorial landing page component */
-import React from 'react';
+import Nav from './components/Nav';
 import Hero from './components/Hero';
-import About from './components/About';
 import Features from './components/Features';
 import Terminal from './components/Terminal';
+import Architecture from './components/Architecture';
+import Install from './components/Install';
 import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <main>
+    <main className="relative">
+      <Nav />
       <Hero />
-      <About />
       <Features />
       <Terminal />
+      <Architecture />
+      <Install />
       <Footer />
     </main>
   );
