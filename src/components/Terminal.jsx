@@ -1,222 +1,150 @@
-/* src/components/Terminal.jsx — Modern grayscale editorial landing page component */
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import useInView from '../hooks/useInView';
 
-const lines = [
-  { text: '$ elysium log', color: 'text-1' },
-  { text: '', color: '' },
-  { text: '✦ E.L.Y.S.I.U.M daily check-in', color: 'accent' },
-  { text: '──────────────────────────────', color: 'text-3' },
-  { text: 'What did you build today?', color: 'text-2' },
-  { text: '> Built the plugin registry for elysium_additionals', color: 'text-1' },
-  { text: '', color: '' },
-  { text: 'How are you feeling? (1-10): 7', color: 'text-2' },
-  { text: '', color: '' },
-  { text: '✦ Logged. Keep building.', color: 'accent' },
-  { text: '', color: '' },
-  { text: '$ elysium run --model gemini-2.0-flash', color: 'text-1' },
-  { text: '✦ Model loaded: gemini-2.0-flash [OpenRouter]', color: 'accent' },
-  { text: '✦ Ready.', color: 'accent' },
+const SESSION = [
+  {
+    cmd: 'romeo version',
+    out: ['elysium 0.0.8'],
+  },
+  {
+    cmd: 'romeo version-name',
+    out: ['omega-cooper'],
+  },
+  {
+    cmd: 'romeo status',
+    out: ['development — not stable yet'],
+  },
+  {
+    cmd: 'romeo ram-info',
+    out: [
+      'Total RAM : 31.28 GB',
+      'Used      : 12.44 GB',
+      'Free      : 18.84 GB',
+      'Swap      : 8.00 GB',
+    ],
+  },
+  {
+    cmd: 'romeo cache-info',
+    out: [
+      '.cache total : 14.20 GB',
+      '',
+      '4.21 GB   mozilla/firefox',
+      '2.87 GB   google/chrome',
+      '1.93 GB   huggingface',
+      '1.10 GB   pip',
+      '0.86 GB   uv',
+    ],
+  },
+  {
+    cmd: 'romeo check-version',
+    out: ['No update available'],
+  },
 ];
 
-const colorMap = {
-  'text-1': 'var(--text-1)',
-  'text-2': 'var(--text-2)',
-  'text-3': 'var(--text-3)',
-  'accent': 'var(--accent)',
-  '': 'transparent',
-};
+const TYPE_MS = 55;
+const LINE_MS = 260;
+const CMD_PAUSE = 900;
+const LOOP_PAUSE = 3200;
 
 export default function Terminal() {
-  const [ref, isInView] = useInView();
-  const started = useRef(false);
+  const [entryIndex, setEntryIndex] = useState(0);
+  const [typed, setTyped] = useState(0);
+  const [linesShown, setLinesShown] = useState(0);
+  const bodyRef = useRef(null);
 
-  const [displayedLines, setDisplayedLines] = useState([]);
-  const [currentLineText, setCurrentLineText] = useState('');
-  const [currentLineColor, setCurrentLineColor] = useState('text-2');
-  const [done, setDone] = useState(false);
-
-  const lineIndex = useRef(0);
-  const charIndex = useRef(0);
-  const intervalRef = useRef(null);
+  const entry = SESSION[entryIndex];
+  const doneTyping = typed >= entry.cmd.length;
+  const doneOutput = linesShown >= entry.out.length;
 
   useEffect(() => {
-    if (!isInView || started.current) return;
-    started.current = true;
+    if (!doneTyping) {
+      const t = setTimeout(() => setTyped((n) => n + 1), TYPE_MS);
+      return () => clearTimeout(t);
+    }
+    if (!doneOutput) {
+      const t = setTimeout(() => setLinesShown((n) => n + 1), LINE_MS);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setTyped(0);
+      setLinesShown(0);
+      setEntryIndex((i) => (i + 1) % SESSION.length);
+    }, doneTyping && doneOutput ? (entryIndex === SESSION.length - 1 ? LOOP_PAUSE : CMD_PAUSE) : 0);
+    return () => clearTimeout(t);
+  }, [typed, linesShown, entryIndex, doneTyping, doneOutput]);
 
-    setCurrentLineColor(lines[0].color);
-
-    intervalRef.current = setInterval(() => {
-      const li = lineIndex.current;
-      if (li >= lines.length) {
-        clearInterval(intervalRef.current);
-        setCurrentLineText('');
-        setDone(true);
-        return;
-      }
-
-      const currentLine = lines[li];
-
-      if (currentLine.text === '') {
-        setDisplayedLines(prev => [...prev, { text: '', color: currentLine.color }]);
-        setCurrentLineText('');
-        lineIndex.current += 1;
-        if (lineIndex.current < lines.length) {
-          setCurrentLineColor(lines[lineIndex.current].color);
-        }
-        return;
-      }
-
-      const ci = charIndex.current;
-
-      if (ci < currentLine.text.length) {
-        charIndex.current += 1;
-        setCurrentLineText(currentLine.text.slice(0, ci + 1));
-      } else {
-        setDisplayedLines(prev => [...prev, { text: currentLine.text, color: currentLine.color }]);
-        setCurrentLineText('');
-        charIndex.current = 0;
-        lineIndex.current += 1;
-        if (lineIndex.current < lines.length) {
-          setCurrentLineColor(lines[lineIndex.current].color);
-        }
-      }
-    }, 28);
-
-    return () => clearInterval(intervalRef.current);
-  }, [isInView]);
+  useEffect(() => {
+    bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight });
+  }, [typed, linesShown]);
 
   return (
-    <section
-      style={{
-        width: '100%',
-        background: 'var(--bg-2)',
-        padding: '140px 0',
-      }}
-    >
-      {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: 72 }}>
-        <p
-          style={{
-            fontFamily: '"DM Sans", sans-serif',
-            fontWeight: 400,
-            fontSize: 11,
-            letterSpacing: '0.35em',
-            color: 'var(--text-3)',
-            textTransform: 'uppercase',
-            marginBottom: 14,
-          }}
-        >
-          Live Preview
-        </p>
-        <h2
-          style={{
-            fontFamily: '"Cormorant Garamond", serif',
-            fontWeight: 300,
-            fontSize: 'clamp(2.8rem, 5vw, 4rem)',
-            color: 'var(--text-1)',
-            lineHeight: 1,
-            margin: 0,
-          }}
-        >
-          See it run.
-        </h2>
-      </div>
-
-      {/* Terminal window */}
-      <div
-        ref={ref}
-        style={{
-          maxWidth: 760,
-          margin: '0 auto',
-          padding: '0 40px',
-        }}
-      >
+    <section id="terminal" className="border-y border-line-1 bg-surface-1 py-28">
+      <div className="mx-auto max-w-6xl px-6">
         <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={isInView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            border: '1px solid var(--border-2)',
-            borderRadius: 10,
-            overflow: 'hidden',
-            boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
-          }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="grid items-center gap-14 lg:grid-cols-[1fr_1.2fr]"
         >
-          {/* Title bar */}
-          <div
-            style={{
-              background: '#0f0f0f',
-              height: 44,
-              padding: '0 16px',
-              display: 'flex',
-              alignItems: 'center',
-              position: 'relative',
-              borderBottom: '1px solid var(--border)',
-            }}
-          >
-            <div style={{ display: 'flex', gap: 8 }}>
-              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
-              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
-              <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#555555' }} />
-            </div>
-            <span
-              style={{
-                position: 'absolute',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                fontFamily: '"JetBrains Mono", monospace',
-                fontWeight: 400,
-                fontSize: 11,
-                color: 'var(--text-3)',
-                letterSpacing: '0.05em',
-              }}
-            >
-              elysium — bash
-            </span>
+          <div>
+            <p className="kicker mb-6 text-ink-3">Command Line</p>
+            <h2 className="display text-4xl text-white md:text-5xl">
+              Talk to the<br />
+              <span className="italic text-ink-2">harness directly.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-relaxed font-light text-ink-2">
+              The <span className="font-mono text-white">romeo</span> CLI speaks eleven
+              subcommands — version intel, live RAM stats, per-application cache audits,
+              and full autonomous updates. No dashboard required.
+            </p>
           </div>
 
-          {/* Terminal body */}
-          <div
-            style={{
-              background: '#060606',
-              padding: '28px 36px',
-              minHeight: 340,
-              fontFamily: '"JetBrains Mono", monospace',
-              fontSize: 13,
-              lineHeight: 2,
-              color: 'var(--text-2)',
-            }}
-          >
-            {displayedLines.map((line, i) => (
-              <div key={i} style={{ color: colorMap[line.color] || 'var(--text-2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                {line.text === '' ? '\u00A0' : line.text}
+          <div className="overflow-hidden border border-line-2 bg-bg shadow-[0_0_80px_rgba(255,255,255,0.04)]">
+            <div className="flex items-center justify-between border-b border-line-1 px-4 py-2.5">
+              <div className="flex gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-full border border-line-3" />
+                <span className="h-2.5 w-2.5 rounded-full border border-line-3" />
+                <span className="h-2.5 w-2.5 rounded-full bg-white/70" />
               </div>
-            ))}
+              <p className="font-mono text-[10px] tracking-[0.2em] text-ink-4">
+                romeo — elysium@home
+              </p>
+            </div>
 
-            {!done && currentLineText !== '' && (
-              <div style={{ color: colorMap[currentLineColor] || 'var(--text-2)' }}>
-                {currentLineText}
-              </div>
-            )}
-
-            {done && (
-              <div>
-                <span
-                  style={{
-                    color: 'var(--accent)',
-                    animation: 'blink 1.1s ease-in-out infinite',
-                    fontSize: 14,
-                  }}
-                >
-                  █
-                </span>
-              </div>
-            )}
+            <div ref={bodyRef} className="h-80 overflow-y-auto p-5 font-mono text-[13px] leading-7">
+              {SESSION.slice(0, entryIndex).map((e) => (
+                <SessionBlock key={e.cmd} cmd={e.cmd} out={e.out} all />
+              ))}
+              <SessionBlock
+                key={entry.cmd}
+                cmd={entry.cmd}
+                out={entry.out}
+                typed={doneTyping ? undefined : typed}
+                lines={linesShown}
+              />
+            </div>
           </div>
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function SessionBlock({ cmd, out, typed, lines = out.length, all }) {
+  const showPrompt = typed !== undefined || all;
+  return (
+    <div className={all ? '' : 'mb-2'}>
+      {showPrompt && (
+        <p className="text-white">
+          <span className="mr-2 text-ink-3">:~$</span>
+          {typed !== undefined ? cmd.slice(0, typed) : cmd}
+          {typed !== undefined && !all && <span className="cursor-blink">▌</span>}
+        </p>
+      )}
+      {out.slice(0, lines).map((line, i) => (
+        <p key={i} className="whitespace-pre text-ink-2">{line || '\u00A0'}</p>
+      ))}
+    </div>
   );
 }
