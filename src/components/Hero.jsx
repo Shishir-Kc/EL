@@ -1,224 +1,149 @@
-/* src/components/Hero.jsx — Modern grayscale editorial landing page component */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Status from './Status';
-import Toast from './Toast';
 
-const installCmd = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
+const ASCII = '/\\-\\_=+|< -/= ~:*-/  [ELYSIUM://BOOT]  >_ run --home --secure  /\\-\\_=+|< ~:*-/  ';
+
+const INSTALL_CMD = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
+
+const STATS = [
+  ['FastAPI', 'Live server core'],
+  ['Fernet', 'Keys encrypted at rest'],
+  ['NVIDIA NIM', 'Agent reasoning'],
+  ['uv · Python 3.12', 'Native runtime'],
+];
+
+const fade = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
 
 export default function Hero() {
-  const [toastVisible, setToastVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(installCmd).then(() => {
-      setToastVisible(true);
-      setTimeout(() => setToastVisible(false), 2000);
-    });
+  const copyInstall = async () => {
+    try {
+      await navigator.clipboard.writeText(INSTALL_CMD);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* clipboard unavailable */
+    }
   };
 
   return (
-    <>
-      <Toast message="Copied to clipboard" visible={toastVisible} />
-      <section
-        style={{
-          height: '100svh',
-          overflow: 'hidden',
-          background: 'var(--bg)',
-          position: 'relative',
-        }}
-      >
-        {/* Subtle radial glow */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'radial-gradient(ellipse 70% 50% at 50% 55%, rgba(255,255,255,0.035) 0%, transparent 60%)',
-            pointerEvents: 'none',
-          }}
-        />
+    <section id="top" className="dot-grid relative overflow-hidden pt-36 pb-20">
+      <div className="hairline-grid pointer-events-none absolute inset-0" aria-hidden />
 
-        {/* Dot grid */}
-        <div
-          className="dot-grid"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Edge vignette */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'radial-gradient(ellipse at center, transparent 30%, #030303 80%)',
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Content */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            minHeight: '100vh',
-            padding: '0 24px',
-          }}
+      <div className="relative mx-auto max-w-6xl px-6">
+        <motion.p
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={0}
+          className="kicker mb-8 flex items-center gap-3 text-ink-2"
         >
-          {/* Small label */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-            style={{
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 400,
-              fontSize: 11,
-              letterSpacing: '0.35em',
-              textTransform: 'uppercase',
-              color: 'var(--text-3)',
-              marginBottom: 36,
-            }}
-          >
-            Modular AI Agent & CLI Toolkit
-          </motion.p>
+          <span className="pulse-dot inline-block h-1.5 w-1.5 rounded-full bg-white" />
+          Home AI Security Harness · v0.0.8 omega-cooper
+        </motion.p>
 
-          {/* Main heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            style={{
-              fontFamily: '"Cormorant Garamond", serif',
-              fontWeight: 300,
-              fontSize: 'clamp(6.5rem, 13vw, 12rem)',
-              letterSpacing: '0.06em',
-              color: 'var(--text-1)',
-              lineHeight: 0.92,
-              margin: 0,
-            }}
-          >
-            E.L.Y.S.I.U.M
-          </motion.h1>
+        <motion.h1
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={1}
+          className="display max-w-4xl text-[clamp(3.2rem,9vw,7rem)] text-white"
+        >
+          The Harness That<br />
+          <span className="italic text-ink-2">Keeps Your</span> Home<br />
+          Intelligent.
+        </motion.h1>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
-            style={{
-              fontFamily: '"DM Sans", sans-serif',
-              fontWeight: 300,
-              fontSize: 'clamp(1rem, 1.4vw, 1.25rem)',
-              color: 'var(--text-2)',
-              maxWidth: 520,
-              margin: '28px auto 0 auto',
-              lineHeight: 1.65,
-              letterSpacing: '0.01em',
-            }}
-          >
-            A modular, extensible Python-based personal AI agent and CLI tool for developers who think in systems.
-          </motion.p>
+        <motion.p
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={2}
+          className="mt-10 max-w-xl text-base leading-relaxed font-light text-ink-2 md:text-lg"
+        >
+          E.L.Y.S.I.U.M is a modular, self-aware home server harness — agents that reason,
+          keys that never sleep in plain text, telemetry that streams live, and a harness
+          that updates itself while you sleep.
+        </motion.p>
 
-          {/* Status Tags */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
-            style={{ marginTop: 36 }}
+        <motion.div
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={3}
+          className="mt-12 flex flex-wrap items-center gap-4"
+        >
+          <a
+            href="#install"
+            className="bg-white px-7 py-3 font-mono text-xs tracking-[0.18em] text-bg uppercase transition-colors hover:bg-ink-2"
           >
-            <Status />
-          </motion.div>
+            Install the Harness
+          </a>
+          <a
+            href="#features"
+            className="border border-line-3 px-7 py-3 font-mono text-xs tracking-[0.18em] text-ink-1 uppercase transition-colors hover:border-white hover:text-white"
+          >
+            Explore Features
+          </a>
+        </motion.div>
 
-          {/* Actions */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 24,
-              marginTop: 48,
-            }}
-          >
-            {/* Install command */}
-            <div
-              onClick={handleCopy}
-              title="Click to copy"
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid var(--border)',
-                padding: '14px 24px',
-                borderRadius: '4px',
-                fontFamily: '"JetBrains Mono", monospace',
-                fontSize: 13,
-                color: 'var(--text-2)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 10,
-                cursor: 'pointer',
-                transition: 'border-color 0.25s ease, background 0.25s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-              }}
+        <motion.div
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={4}
+          className="mt-8 max-w-2xl"
+        >
+          <div className="flex items-center gap-3 border border-line-2 bg-surface-1 py-3 pr-3 pl-4">
+            <code className="flex-1 overflow-x-auto font-mono text-xs whitespace-pre text-ink-1">
+              <span className="mr-2 text-ink-4 select-none">$</span>
+              {INSTALL_CMD}
+            </code>
+            <button
+              onClick={copyInstall}
+              className="shrink-0 border border-line-2 px-3 py-1.5 font-mono text-[10px] tracking-[0.14em] text-ink-2 uppercase transition-colors hover:border-white hover:text-white"
             >
-              <span style={{ color: 'var(--text-1)' }}>$</span>
-              <span>{installCmd}</span>
+              {copied ? 'Copied ✓' : 'Copy'}
+            </button>
+          </div>
+          <p className="mt-3 font-mono text-[10px] tracking-[0.12em] text-ink-3">
+            linux native · requires python 3.12 + uv
+          </p>
+        </motion.div>
+
+        <motion.div
+          variants={fade}
+          initial="hidden"
+          animate="show"
+          custom={5}
+          className="mt-16 grid grid-cols-2 gap-px border border-line-1 bg-line-1 md:grid-cols-4"
+        >
+          {STATS.map(([title, sub]) => (
+            <div key={title} className="bg-surface-1 px-5 py-4">
+              <p className="font-mono text-sm text-white">{title}</p>
+              <p className="mt-1 text-xs text-ink-3">{sub}</p>
             </div>
+          ))}
+        </motion.div>
+      </div>
 
-            <a
-              href="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none' }}
-            >
-              <button
-                style={{
-                  background: 'transparent',
-                  border: '1px solid var(--border-2)',
-                  color: 'var(--text-2)',
-                  fontFamily: '"DM Sans", sans-serif',
-                  fontWeight: 400,
-                  fontSize: 13,
-                  letterSpacing: '0.08em',
-                  padding: '14px 36px',
-                  borderRadius: '2px',
-                  cursor: 'pointer',
-                  transition: 'border-color 0.25s ease, color 0.25s ease, background 0.25s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--text-1)';
-                  e.currentTarget.style.color = 'var(--text-1)';
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border-2)';
-                  e.currentTarget.style.color = 'var(--text-2)';
-                  e.currentTarget.style.background = 'transparent';
-                }}
-              >
-                View Source
-              </button>
-            </a>
-          </motion.div>
+      <div className="relative mt-20 border-y border-line-1 bg-surface-1 py-3 overflow-hidden select-none">
+        <div className="ascii-marquee">
+          {[0, 1].map((n) => (
+            <span key={n} className="pr-8 font-mono text-[11px] whitespace-pre text-ink-4">
+              {ASCII}
+            </span>
+          ))}
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
