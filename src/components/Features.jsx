@@ -14,7 +14,7 @@ const FEATURES = [
     label: 'Encryption',
     title: 'Keys Never Sleep in Plain Text',
     body:
-      'Every API key is sealed with Fernet symmetric encryption before it touches disk. The vault lives under ~/.config/E.L.Y.S.I.U.M, detects duplicate provider+model pairs, and rotates keys instead of stacking them.',
+      'Every API key is sealed with Fernet symmetric encryption before it touches disk. The vault lives under ~/.config/A.R.I.A, detects duplicate provider+model pairs, and rotates keys instead of stacking them.',
     tags: ['security/encryption/crypto.py', 'keys.json', 'Fernet'],
   },
   {
@@ -31,7 +31,7 @@ const FEATURES = [
     title: 'Learns New Skills on Its Own',
     body:
       'A plug-and-play registry of skills and tools the harness downloads at runtime — version-checked against the cloud, dependency-resolved, and logged to settings.json. The agent decides when to grow.',
-    tags: ['elysium_config/additionals.py', 'Elysium_additionals', 'self-install'],
+    tags: ['aria_config/additionals.py', 'Aria_additionals', 'self-install'],
   },
   {
     id: '005',

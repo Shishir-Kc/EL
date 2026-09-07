@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const ASCII = '/\\-\\_=+|< -/= ~:*-/  [ELYSIUM://BOOT]  >_ run --home --secure  /\\-\\_=+|< ~:*-/  ';
+const ASCII = '/\\-\\_=+|< -/= ~:*-/  [ARIA://BOOT]  >_ run --home --secure  /\\-\\_=+|< ~:*-/  ';
 
-const INSTALL_CMD = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
+const INSTALL_CMD = 'curl -fsSL https://aria.shishirkhatri.com.np/install.sh | sh';
 
 const STATS = [
   ['FastAPI', 'Live server core'],
@@ -69,7 +69,7 @@ export default function Hero() {
           custom={2}
           className="mt-10 max-w-xl text-base leading-relaxed font-light text-ink-2 md:text-lg"
         >
-          E.L.Y.S.I.U.M is a modular, self-aware home server harness — agents that reason,
+          A.R.I.A is a modular, self-aware home server harness — agents that reason,
           keys that never sleep in plain text, telemetry that streams live, and a harness
           that updates itself while you sleep.
         </motion.p>

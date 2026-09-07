@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const CURL_CMD = 'curl -fsSL https://elysium.shishirkhatri.com.np/install.sh | sh';
+const CURL_CMD = 'curl -fsSL https://aria.shishirkhatri.com.np/install.sh | sh';
 
 const SCRIPT_STEPS = [
   'Verifies Linux + at least 4 GB RAM',
   'Bootstraps uv into ~/.local/bin',
-  'Clones the harness to ~/.E.L.Y.S.I.U.M',
+  'Clones the harness to ~/.A.R.I.A',
   'Syncs every dependency with uv sync',
-  'Wires the romeo launcher into your PATH',
+  'Wires the aria launcher into your PATH',
 ];
 
 export default function Install() {
@@ -42,7 +42,7 @@ export default function Install() {
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed font-light text-ink-2">
               One command. One script. It provisions the{' '}
-              <span className="font-mono text-white">romeo</span> launcher, wires your
+              <span className="font-mono text-white">aria</span> launcher, wires your
               PATH, and offers an interactive upgrade path on every re-run.
             </p>
             <p className="mt-8 font-mono text-[11px] tracking-[0.16em] text-ink-3 uppercase">
@@ -93,7 +93,7 @@ export default function Install() {
             </div>
 
             <div className="border-t border-line-1 px-4 py-3 font-mono text-[11px] text-ink-3">
-              # then run <span className="text-white">romeo</span> in any terminal — the
+              # then run <span className="text-white">aria</span> in any terminal — the
               harness answers
             </div>
           </motion.div>

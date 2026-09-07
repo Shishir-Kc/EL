@@ -46,14 +46,14 @@ left() {
 }
 
 # ── Paths ────────────────────────────────────────────────
-REPO="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M"
-INSTALL_DIR="$HOME/.E.L.Y.S.I.U.M"
-CONFIG_DIR="$HOME/.config/E.L.Y.S.I.U.M"
+REPO="https://github.com/Shishir-Kc/A.R.I.A"
+INSTALL_DIR="$HOME/.A.R.I.A"
+CONFIG_DIR="$HOME/.config/A.R.I.A"
 LOGS_DIR="$CONFIG_DIR/Logs"
 MEMORY_DIR="$CONFIG_DIR/Memory"
 SKILLS="$CONFIG_DIR/Skills"
-ELYSIUM_CONFIG="$CONFIG_DIR/Config"
-LAUNCHER="$HOME/.local/bin/romeo"
+ARIA_CONFIG="$CONFIG_DIR/Config"
+LAUNCHER="$HOME/.local/bin/aria"
 BASHRC="$HOME/.bashrc"
 
 remove_launcher() {
@@ -76,7 +76,7 @@ remove_launcher() {
 remove_code() {
   if [ -d "$INSTALL_DIR" ]; then
     rm -rf "$INSTALL_DIR"
-    ok "Removed E.L.Y.S.I.U.M code install: $INSTALL_DIR"
+    ok "Removed A.R.I.A code install: $INSTALL_DIR"
   else
     step "No code install found at $INSTALL_DIR"
   fi
@@ -90,7 +90,7 @@ remove_config() {
     return 0
   fi
   echo ""
-  warn "This will DELETE your E.L.Y.S.I.U.M configuration directory:"
+  warn "This will DELETE your A.R.I.A configuration directory:"
   printf "    ${RED}%s${RESET}\n" "$CONFIG_DIR"
   echo ""
   first="$(ask "Continue and review the warning? [y/N]:")"
@@ -117,25 +117,25 @@ remove_config() {
   fi
 
   rm -rf "$CONFIG_DIR"
-  ok "Removed E.L.Y.S.I.U.M config: $CONFIG_DIR"
+  ok "Removed A.R.I.A config: $CONFIG_DIR"
 }
 
 # ── Uninstall menu ───────────────────────────────────────
 uninstall() {
   echo ""
   printf "${PURPLE}╭%s╮${RESET}\n" "$(printf '─%.0s' $(seq 1 58))"
-  center "Elysium Uninstaller"
+  center "ARIA Uninstaller"
   printf "${PURPLE}╰%s╯${RESET}\n" "$(printf '─%.0s' $(seq 1 58))"
   echo ""
 
   if [ ! -d "$INSTALL_DIR" ] && [ ! -d "$CONFIG_DIR" ] && [ ! -f "$LAUNCHER" ]; then
-    err "Nothing to uninstall — E.L.Y.S.I.U.M is not present."
+    err "Nothing to uninstall — A.R.I.A is not present."
     exit 0
   fi
 
   printf "What would you like to remove?\n"
-  printf "  [R]emove code   \xE2\x80\x94 remove the E.L.Y.S.I.U.M install + romeo launcher\n"
-  printf "  [C]onfig        \xE2\x80\x94 remove your E.L.Y.S.I.U.M config (2-step confirm)\n"
+  printf "  [R]emove code   \xE2\x80\x94 remove the A.R.I.A install + aria launcher\n"
+  printf "  [C]onfig        \xE2\x80\x94 remove your A.R.I.A config (2-step confirm)\n"
   printf "  [A]ll           \xE2\x80\x94 remove code AND config (config needs 2-step confirm)\n"
   printf "  [Q]uit          \xE2\x80\x94 do nothing\n"
   printf "Choice [r/R/c/C/a/A/q/Q]: "
@@ -175,7 +175,7 @@ esac
 
 
 # ── Title box ─────────────────────────────────────────────
-TITLE="\$ Elysium Agent Installer"
+TITLE="\$ ARIA Agent Installer"
 TAGLINE="A self hosted Life Agent Harness for personal Use"
 
 echo ""
@@ -267,20 +267,20 @@ else
 fi
 echo ""
 
-# ── Elysium ASCII banner ─────────────────────────────────
+# ── ARIA ASCII banner ────────────────────────────────────
 cat << "EOF"
-   ███████╗   ██╗░░░░░   ██╗░░░██╗   ░██████╗   ██╗   ██╗░░░██╗   ███╗░░░███╗
-   ██╔════╝   ██║░░░░░   ╚██╗░██╔╝   ██╔════╝   ██║   ██║░░░██║   ████╗░████║
-   █████╗░░   ██║░░░░░   ░╚████╔╝░   ╚█████╗░   ██║   ██║░░░██║   ██╔████╔██║
-   ██╔══╝░░   ██║░░░░░   ░░╚██╔╝░░   ░╚═══██╗   ██║   ██║░░░██║   ██║╚██╔╝██║
-   ███████╗   ███████╗   ░░░██║░░░   ██████╔╝   ██║   ╚██████╔╝   ██║░╚═╝░██║
-   ╚══════╝   ╚══════╝   ░░░╚═╝░░░   ╚═════╝░   ╚═╝   ░╚═════╝░   ╚═╝░░░░░╚═╝
+        █████╗  ██████╗  ██╗ █████╗
+       ██╔══██╗ ██╔══██╗ ██║██╔══██╗
+       ███████║ ██████╔╝ ██║███████║
+       ██╔══██║ ██╔══██╗ ██║██╔══██║
+       ██║  ██║ ██║  ██║ ██║██║  ██║
+       ╚═╝  ╚═╝ ╚═╝  ╚═╝ ╚═╝╚═╝  ╚═╝
 EOF
 echo ""
 
 # ── Handle existing install ──────────────────────────────
 if [ -d "$INSTALL_DIR" ]; then
-    echo "Elysium is already installed at $INSTALL_DIR"
+    echo "ARIA is already installed at $INSTALL_DIR"
     printf "What would you like to do?\n"
     printf "  [R]einstall  \xE2\x80\x94 remove existing install and clone fresh\n"
     printf "  [U]pgrade    \xE2\x80\x94 pull latest changes and sync deps\n"
@@ -291,11 +291,11 @@ if [ -d "$INSTALL_DIR" ]; then
         [Rr])
             rm -rf "$INSTALL_DIR"
             (git clone "$REPO" "$INSTALL_DIR" > /dev/null 2>&1) &
-            spinner $! "Reinstalling Elysium" || exit 1
+            spinner $! "Reinstalling ARIA" || exit 1
             ;;
         [Uu])
             (cd "$INSTALL_DIR" && git pull > /dev/null 2>&1) &
-            spinner $! "Upgrading Elysium" || exit 1
+            spinner $! "Upgrading ARIA" || exit 1
             ;;
         [Qq])
             echo "Aborted."
@@ -308,7 +308,7 @@ if [ -d "$INSTALL_DIR" ]; then
     esac
 else
     (git clone "$REPO" "$INSTALL_DIR" > /dev/null 2>&1) &
-    spinner $! "Cloning Elysium" || exit 1
+    spinner $! "Cloning ARIA" || exit 1
 fi
 echo ""
 (cd "$INSTALL_DIR" && uv sync > /dev/null 2>&1) &
@@ -316,18 +316,18 @@ spinner $! "Syncing dependencies" || exit 1
 echo ""
 
 step "Creating configs"
-mkdir -p "$CONFIG_DIR" "$LOGS_DIR" "$MEMORY_DIR" "$SKILLS" "$ELYSIUM_CONFIG"
+mkdir -p "$CONFIG_DIR" "$LOGS_DIR" "$MEMORY_DIR" "$SKILLS" "$ARIA_CONFIG"
 
-step "Plugging in romeo"
+step "Plugging in aria"
 mkdir -p ~/.local/bin
-cat > ~/.local/bin/romeo << 'ROMEO_EOF'
+cat > ~/.local/bin/aria << 'ARIA_EOF'
 #!/bin/sh
-cd "$HOME/.E.L.Y.S.I.U.M" && exec uv run python3 -m ElysiumCli.main "$@"
-ROMEO_EOF
-chmod +x ~/.local/bin/romeo
+cd "$HOME/.A.R.I.A" && exec uv run python3 -m AriaCli.main "$@"
+ARIA_EOF
+chmod +x ~/.local/bin/aria
 if ! grep -q '.local/bin' ~/.bashrc 2>/dev/null; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 fi
 
 echo ""
-ok "Done. Run 'source ~/.bashrc' or open a new terminal, then 'romeo' will be available."
+ok "Done. Run 'source ~/.bashrc' or open a new terminal, then 'aria' will be available."

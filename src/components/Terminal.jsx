@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 
 const SESSION = [
   {
-    cmd: 'romeo version',
-    out: ['elysium 0.0.8'],
+    cmd: 'aria version',
+    out: ['aria 0.0.8'],
   },
   {
-    cmd: 'romeo version-name',
+    cmd: 'aria version-name',
     out: ['omega-cooper'],
   },
   {
-    cmd: 'romeo status',
+    cmd: 'aria status',
     out: ['development — not stable yet'],
   },
   {
-    cmd: 'romeo ram-info',
+    cmd: 'aria ram-info',
     out: [
       'Total RAM : 31.28 GB',
       'Used      : 12.44 GB',
@@ -24,7 +24,7 @@ const SESSION = [
     ],
   },
   {
-    cmd: 'romeo cache-info',
+    cmd: 'aria cache-info',
     out: [
       '.cache total : 14.20 GB',
       '',
@@ -36,7 +36,7 @@ const SESSION = [
     ],
   },
   {
-    cmd: 'romeo check-version',
+    cmd: 'aria check-version',
     out: ['No update available'],
   },
 ];
@@ -94,7 +94,7 @@ export default function Terminal() {
               <span className="italic text-ink-2">harness directly.</span>
             </h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed font-light text-ink-2">
-              The <span className="font-mono text-white">romeo</span> CLI speaks eleven
+              The <span className="font-mono text-white">aria</span> CLI speaks eleven
               subcommands — version intel, live RAM stats, per-application cache audits,
               and full autonomous updates. No dashboard required.
             </p>
@@ -108,7 +108,7 @@ export default function Terminal() {
                 <span className="h-2.5 w-2.5 rounded-full bg-white/70" />
               </div>
               <p className="font-mono text-[10px] tracking-[0.2em] text-ink-4">
-                romeo — elysium@home
+                aria — aria@home
               </p>
             </div>
 

@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="display text-3xl text-white">E.L.Y.S.I.U.M</p>
+            <p className="display text-3xl text-white">A.R.I.A</p>
             <p className="mt-3 max-w-xs text-xs leading-relaxed font-light text-ink-3">
               A home AI security harness that reasons, remembers, encrypts, and
               updates itself — so your home runs itself.
@@ -17,7 +17,7 @@ export default function Footer() {
             <a href="#architecture" className="text-ink-2 transition-colors hover:text-white">Architecture</a>
             <a href="#install" className="text-ink-2 transition-colors hover:text-white">Install</a>
             <a
-              href="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M"
+              href="https://github.com/Shishir-Kc/A.R.I.A"
               target="_blank"
               rel="noreferrer"
               className="text-ink-2 transition-colors hover:text-white"
@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="ascii-marquee">
           {[0, 1].map((n) => (
             <span key={n} className="pr-8 font-mono text-[10px] whitespace-pre text-ink-4 opacity-60">
-              {'/\\-\\_=+|< -/= ~:*-/  ELYSIUM://STANDBY  >_ watch --logs --live  /\\-\\_=+|< ~:*-/  '}
+              {'/\\-\\_=+|< -/= ~:*-/  ARIA://STANDBY  >_ watch --logs --live  /\\-\\_=+|< ~:*-/  '}
             </span>
           ))}
         </div>

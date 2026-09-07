@@ -28,7 +28,7 @@ export default function Nav() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="#top" className="group flex items-center">
           <span className="font-mono text-xs tracking-[0.28em] text-ink-1">
-            E.L.Y.S.I.U.M
+            A.R.I.A
           </span>
         </a>
 
@@ -45,7 +45,7 @@ export default function Nav() {
         </div>
 
         <a
-          href="https://github.com/Shishir-Kc/E.L.Y.S.I.U.M"
+          href="https://github.com/Shishir-Kc/A.R.I.A"
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub repository"

@@ -12,13 +12,13 @@ const MODULES = [
     files: ['__init__.py', 'nvidia.py', 'agent.py'],
   },
   {
-    name: 'ElysiumConfig/',
+    name: 'AriaConfig/',
     desc: 'Encrypted model config, self-updater, additionals registry, voice RAM-fit.',
     files: ['model_config.py', 'updater.py', 'additionals.py'],
   },
   {
-    name: 'ElysiumCli/',
-    desc: 'romeo CLI — eleven subcommands over argparse with encrypted cli_config.',
+    name: 'AriaCli/',
+    desc: 'aria CLI — eleven subcommands over argparse with encrypted cli_config.',
     files: ['main.py', 'commands/', 'Config/'],
   },
   {
@@ -87,7 +87,7 @@ export default function Architecture() {
         transition={{ duration: 0.8, delay: 0.2 }}
         className="mt-8 font-mono text-[11px] tracking-[0.14em] text-ink-3 uppercase"
       >
-        Root · ~/.config/E.L.Y.S.I.U.M — logs, keys, skills &amp; memory live here
+        Root · ~/.config/A.R.I.A — logs, keys, skills &amp; memory live here
       </motion.p>
     </section>
   );
